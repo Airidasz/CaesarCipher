@@ -6,7 +6,7 @@ namespace CaesarCipher
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine(CaesarCipher.Decrypt("a", 1));
         }
     }
 }
