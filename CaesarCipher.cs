@@ -34,6 +34,8 @@ namespace CaesarCipher
             return new string(encryptedText);
         }
 
+        // Decryption function uses the encryption function
+        // with a negative offset
         public static string Decrypt(string text, int offset)
         {
             return Encrypt(text, offset * -1);
