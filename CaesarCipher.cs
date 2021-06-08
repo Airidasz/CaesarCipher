@@ -30,7 +30,6 @@ namespace CaesarCipher
                 if (encryptedCharAsciiCode > upperBound || encryptedCharAsciiCode < lowerBound)
                     encryptedCharAsciiCode = Mod(encryptedCharAsciiCode - lowerBound, LetterCount) + lowerBound;
 
-
                 return (char)encryptedCharAsciiCode;
                 }).ToArray();
 
@@ -39,19 +38,7 @@ namespace CaesarCipher
 
         public static string Decrypt(string text, int offset)
         {
-            var decryptedText = text.ToCharArray().Where(x => AlphabetLetters.Contains(x)).Select(x => {
-                // Upper and lower bounds for upper or lower case ascii characters 
-                (int lowerBound, int upperBound) = GetBoundsForChar(x);
-
-                int decryptedCharAsciiCode = x - offset;
-
-                if (decryptedCharAsciiCode > upperBound || decryptedCharAsciiCode < lowerBound)
-                    decryptedCharAsciiCode = Mod(decryptedCharAsciiCode - lowerBound, LetterCount) + lowerBound;
-
-                return (char)decryptedCharAsciiCode;
-            }).ToArray();
-
-            return new string(decryptedText);
+            return Encrypt(text, offset * -1);
         }
 
         // function returns lower and upper bounds
@@ -60,7 +47,7 @@ namespace CaesarCipher
         // for uppercase - ascii codes of A and Z
         private static (int, int) GetBoundsForChar(char c)
         {
-            return Char.IsLower(c) ? UppercaseBounds : LowercaseBounds;
+            return Char.IsLower(c) ? LowercaseBounds : UppercaseBounds;
         }
 
         // This function finds the mathematical modulus of two integers
