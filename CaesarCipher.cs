@@ -9,7 +9,7 @@ namespace CaesarCipher
     /// <summary>
     /// This class contains methods for caesar cipher encryption and decryption
     /// And works only with the original ascii characters a-z and A-Z
-    /// numbers or any other symbols are ignored
+    /// numbers or any other symbols are ignored, but still returned
     /// </summary>
     public class CaesarCipher
     {
@@ -21,7 +21,10 @@ namespace CaesarCipher
 
         public static string Encrypt(string text, int offset)
         {
-            var encryptedText = text.ToCharArray().Where(x => AlphabetLetters.Contains(x)).Select(x => {
+            var encryptedText = text.ToCharArray().Select(x => {
+                if (!AlphabetLetters.Contains(x))
+                    return x;
+
                 // Ascii limits for uppercase or lowercase letter
                 (int lowerBound, int upperBound) = Char.IsLower(x) ? LowercaseBounds : UppercaseBounds;
 
