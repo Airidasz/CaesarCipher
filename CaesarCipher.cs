@@ -8,10 +8,10 @@ namespace CaesarCipher
 {
     /// <summary>
     /// This class contains methods for caesar cipher encryption and decryption
-    /// And works only with the original ascii leters a-z and A-Z
-    /// numbers or any other simbols do not work and are ignored
+    /// And works only with the original ascii characters a-z and A-Z
+    /// numbers or any other symbols are ignored
     /// </summary>
-    class CaesarCipher
+    public class CaesarCipher
     {
         private const string AlphabetLetters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private const int LetterCount = 26;
@@ -22,13 +22,11 @@ namespace CaesarCipher
         public static string Encrypt(string text, int offset)
         {
             var encryptedText = text.ToCharArray().Where(x => AlphabetLetters.Contains(x)).Select(x => {
-                // Upper and lower bounds for upper or lower case ascii characters 
-                (int lowerBound, int upperBound) = GetBoundsForChar(x);
+                // Ascii limits for uppercase or lowercase letter
+                (int lowerBound, int upperBound) = Char.IsLower(x) ? LowercaseBounds : UppercaseBounds;
 
-                int encryptedCharAsciiCode = x + offset;
-
-                if (encryptedCharAsciiCode > upperBound || encryptedCharAsciiCode < lowerBound)
-                    encryptedCharAsciiCode = Mod(encryptedCharAsciiCode - lowerBound, LetterCount) + lowerBound;
+                // Get encrypted character ascii code
+                int encryptedCharAsciiCode = Mod(x + offset - lowerBound, LetterCount) + lowerBound;
 
                 return (char)encryptedCharAsciiCode;
                 }).ToArray();
@@ -39,15 +37,6 @@ namespace CaesarCipher
         public static string Decrypt(string text, int offset)
         {
             return Encrypt(text, offset * -1);
-        }
-
-        // function returns lower and upper bounds
-        // for a given character
-        // for lowercase characters ascii codes of a and z are returned
-        // for uppercase - ascii codes of A and Z
-        private static (int, int) GetBoundsForChar(char c)
-        {
-            return Char.IsLower(c) ? LowercaseBounds : UppercaseBounds;
         }
 
         // This function finds the mathematical modulus of two integers
