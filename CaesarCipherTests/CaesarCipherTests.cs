@@ -26,7 +26,7 @@ namespace CaesarCipher.Tests
         }
 
         [TestMethod()]
-        public void Encrypt_NonLatinCharactersIgnored_SameTest()
+        public void Encrypt_NonLatinCharactersIgnored_SameText()
         {
             int offset = 120;
             string text = "/.?$#!@#!@#^&*((*&^%$+_)(*&^";
